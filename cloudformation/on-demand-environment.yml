@@ -1,0 +1,29 @@
+Parameters:
+  BucketName: 
+    Type: String 
+    Description: Enter Bucket Name
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+    Properties: 
+      BucketName: !Ref BucketName
+      AccessControl: PublicRead
+      WebsiteConfiguration: 
+        IndexDocument: index.html
+  MyBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref MyBucket
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Join ['', ['arn:aws:s3:::', !Ref MyBucket, /*]]
+Outputs:
+  WebsiteURL:
+    Value: !GetAtt MyBucket.WebsiteURL
+    Description: URL for website hosted on S3
