@@ -2,6 +2,10 @@ Parameters:
   BucketName: 
     Type: String 
     Description: Enter Bucket Name
+  EnvPrefix:
+    Type: String
+  Username:
+    Type: String
 Resources:
   MyBucket:
     Type: AWS::S3::Bucket
@@ -22,7 +26,7 @@ Resources:
             Effect: Allow
             Principal: '*'
             Action: 's3:GetObject'
-            Resource: !Join ['', ['arn:aws:s3:::', !Ref MyBucket, /*]]
+            Resource: !Join ['', ['arn:aws:s3:::', !Ref EnvPrefix, '.' , !Ref Username, .com/*]]
 Outputs:
   WebsiteURL:
     Value: !GetAtt MyBucket.WebsiteURL
