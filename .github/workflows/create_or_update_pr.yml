@@ -16,7 +16,7 @@ jobs:
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: OnDemandEnvironmentStack
+          name: ${{ env.BRANCH_NAME }}
           template: cloudformation/on-demand-environment.yml
           parameter-overrides: "EnvPrefix=${{ env.BRANCH_NAME }},BucketName=${{ env.BUCKET_NAME }},Username=${{ env.USERNAME }}"
           aws-region: ${{ env.AWS_REGION }}
