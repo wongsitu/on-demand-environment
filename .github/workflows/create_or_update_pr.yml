@@ -19,6 +19,7 @@ jobs:
           name: S3 on-demand enviroment
           template: cloudformation/on-demand-environment.yml
           parameter-overrides: "EnvPrefix=${{ env.BRANCH_NAME }},BucketName=${{ env.BUCKET_NAME }},Username=${{ env.USERNAME }}"
+          aws-region: ${{ github.event.inputs.region }}
       - name: Deploy static site to S3 bucket
         run: aws s3 sync ./dist s3://${{ env.BRANCH_NAME }}.${{ env.USERNAME }}.com
       # - run: node .github/actions/comment.js
@@ -26,11 +27,11 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
       BRANCH_NAME: ${{ github.head_ref }}
       USERNAME: ${{ github.actor }}
-      
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ISSUE_NUMBER: ${{ github.event.pull_request.number }}
-      REPO: 'jkrsp'
+      REPO: ${{ github.event.repository.name }}
       OWNER: ${{ github.repository_owner }}
       # WEBSITE_LINK: ${{ steps.env-name.outputs.environment }}
