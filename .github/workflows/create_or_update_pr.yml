@@ -21,7 +21,7 @@ jobs:
           parameter-overrides: "EnvPrefix=${{ env.BRANCH_NAME }},BucketName=${{ env.BUCKET_NAME }},Username=${{ env.USERNAME }}"
       - name: Deploy static site to S3 bucket
         run: aws s3 sync ./dist s3://${{ env.BRANCH_NAME }}.${{ env.USERNAME }}.com
-      - run: node .github/actions/comment.js
+      # - run: node .github/actions/comment.js
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -33,4 +33,4 @@ jobs:
       ISSUE_NUMBER: ${{ github.event.pull_request.number }}
       REPO: 'jkrsp'
       OWNER: ${{ github.repository_owner }}
-      WEBSITE_LINK: ${{ steps.env-name.outputs.environment }}
+      # WEBSITE_LINK: ${{ steps.env-name.outputs.environment }}
