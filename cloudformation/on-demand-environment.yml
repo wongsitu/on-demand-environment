@@ -18,16 +18,17 @@ Resources:
     Properties:
       Bucket: !Ref MyBucket
       PolicyDocument:
-        Version: "2012-10-17"
+        Version: 2012-10-17
         Statement:
           - Action:
-            - 's3:GetObject'
+              - 's3:GetObject'
             Effect: Allow
             Principal: '*'
             Resource: !Join
               - ''
               - - 'arn:aws:s3:::'
                 - !Ref EnvPrefix
+                - '.'
                 - !Ref Username
                 - '.com/*'
 Outputs:
