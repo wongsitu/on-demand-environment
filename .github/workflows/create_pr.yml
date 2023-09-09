@@ -13,7 +13,7 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: ${{ env.BRANCH_NAME }}
-          template: cloudformation/on-demand-environment.yml
+          template: on-demand-environment.yml
           parameter-overrides: "EnvPrefix=${{ env.BRANCH_NAME }},BucketName=${{ env.BUCKET_NAME }},Username=${{ env.USERNAME }}"
           aws-region: ${{ env.AWS_REGION }}
     env:
