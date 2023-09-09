@@ -4,7 +4,11 @@ on:
     types:
       - completed
   pull_request:
-    types: [opened, reopened, synchronize, edited]
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
 
 name: Deploy to S3 Bucket
 jobs:
