@@ -8,12 +8,14 @@ jobs:
   create_or_update_pr_env:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v1
       - name: Deploy to AWS CloudFormation
         id: cfn-deploy
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: ${{ env.BRANCH_NAME }}
-          template: on-demand-environment.yml
+          template: cloudformation/on-demand-environment.yml
           parameter-overrides: "EnvPrefix=${{ env.BRANCH_NAME }},BucketName=${{ env.BUCKET_NAME }},Username=${{ env.USERNAME }}"
           aws-region: ${{ env.AWS_REGION }}
     env:
