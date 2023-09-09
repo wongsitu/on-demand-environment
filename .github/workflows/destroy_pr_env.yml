@@ -6,12 +6,24 @@ name: Destroy PR Env
 jobs:
   destroy_pr_env:
     runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      BRANCH_NAME: ${{ github.head_ref }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ env.BRANCH_NAME }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Delete objects in S3
+        run: |
+          aws s3 rm s3://${{ env.BRANCH_NAME }}.${{ env.USERNAME }}.com --recursive
+          aws cloudformation delete-stack --stack-name ${{ env.BRANCH_NAME }}
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      BRANCH_NAME: ${{ github.head_ref }}
+      USERNAME: ${{ github.actor }}
