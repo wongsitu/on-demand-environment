@@ -6,7 +6,7 @@ on:
   pull_request:
     types: [opened, reopened, synchronize, edited]
 
-name: Create PR Env
+name: Deploy to S3 Bucket
 jobs:
   create_or_update_pr_env:
     runs-on: ubuntu-latest
