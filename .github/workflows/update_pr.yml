@@ -1,6 +1,10 @@
 on:
+  workflow_run:
+    workflows: ["CI build"]
+    types:
+      - completed
   pull_request:
-    types: [reopened, opened, synchronize, edited]
+    types: [synchronize, edited]
 
 name: Create PR Env
 jobs:
@@ -13,26 +17,15 @@ jobs:
         run: npm ci
       - name: Build Site
         run: npm run build
-      - name: Deploy to AWS CloudFormation
-        id: cfn-deploy
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
-        with:
-          name: ${{ env.BRANCH_NAME }}
-          template: cloudformation/on-demand-environment.yml
-          parameter-overrides: "EnvPrefix=${{ env.BRANCH_NAME }},BucketName=${{ env.BUCKET_NAME }},Username=${{ env.USERNAME }}"
-          aws-region: ${{ env.AWS_REGION }}
       - name: Deploy static site to S3 bucket
         run: | 
           aws s3 sync ./dist s3://${{ env.BRANCH_NAME }}.${{ env.USERNAME }}.com --delete
-          run: echo ${{ steps.cfn-deploy.outputs }}
+      # run: echo ${{ steps.cfn-deploy.outputs }}
       # - run: node .github/actions/comment.js
 
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      BUCKET_NAME: '${{ github.head_ref }}.${{ github.actor }}.com'
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
       BRANCH_NAME: ${{ github.head_ref }}
       USERNAME: ${{ github.actor }}
       ISSUE_NUMBER: ${{ github.event.pull_request.number }}
