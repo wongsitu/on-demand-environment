@@ -24,17 +24,13 @@ Resources:
               - 's3:GetObject'
             Effect: Allow
             Principal: '*'
-            Resource: !Sub 
-              - 'arn:aws:s3:::${EnvPrefix}.${Username}.com/*'
-              - EnvPrefix: !Ref EnvPrefix
-              - Username: !Ref Username
-            # Resource: !Join
-            #   - ''
-            #   - - 'arn:aws:s3:::'
-            #     - !Ref EnvPrefix
-            #     - '.'
-            #     - !Ref Username
-            #     - '.com/*'
+            Resource: !Join
+              - ''
+              - - 'arn:aws:s3:::'
+                - !Ref EnvPrefix
+                - '.'
+                - !Ref Username
+                - '.com/*'
 Outputs:
   WebsiteURL:
     Value: !GetAtt MyBucket.WebsiteURL
