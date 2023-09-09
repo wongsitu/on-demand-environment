@@ -10,12 +10,8 @@ async function run() {
       owner: OWNER,
       repo: REPO,
       issue_number: ISSUE_NUMBER,
-      // We unfortunately need to use replace to get rid
-      // of extraneous double quotes
       body: `[${WEBSITE_LINK}](${WEBSITE_LINK.replace(/"/gs, '')})`
     });
-
-    // for debugging, lets log the created comment
     console.log('created comment', data);
   } catch (err) {
     throw err
