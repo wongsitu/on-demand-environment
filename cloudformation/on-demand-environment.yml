@@ -10,7 +10,6 @@ Resources:
   MyBucket:
     Type: AWS::S3::Bucket
     Properties: 
-      AccessControl: PublicRead
       BucketName: !Ref BucketName
       WebsiteConfiguration: 
         IndexDocument: index.html
