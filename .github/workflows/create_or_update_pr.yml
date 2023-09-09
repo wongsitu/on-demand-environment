@@ -6,8 +6,6 @@ name: Create PR Env
 jobs:
   create_or_update_pr_env:
     runs-on: ubuntu-latest
-    outputs:
-      WEBSITE_LINK: ${{ steps.cfn-deploy.outputs.WebsiteURL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -26,7 +24,7 @@ jobs:
       - name: Deploy static site to S3 bucket
         run: | 
           aws s3 sync ./dist s3://${{ env.BRANCH_NAME }}.${{ env.USERNAME }}.com --delete
-          run: echo ${{ outputs.WEBSITE_LINK }}
+          run: echo ${{ steps.cfn-deploy.outputs }}
       # - run: node .github/actions/comment.js
 
     env:
