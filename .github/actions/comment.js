@@ -1,4 +1,4 @@
-import github from '@actions/github'
+const github = require('@actions/github');
 
 async function run() {
   const { ISSUE_NUMBER, GITHUB_TOKEN, OWNER, REPO, WEBSITE_LINK } = process.env
