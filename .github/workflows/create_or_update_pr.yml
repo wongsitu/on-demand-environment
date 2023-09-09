@@ -6,6 +6,8 @@ name: Create PR Env
 jobs:
   create_or_update_pr_env:
     runs-on: ubuntu-latest
+    outputs:
+      WEBSITE_LINK: ${{ steps.cfn-deploy.outputs.WebsiteURL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -22,7 +24,9 @@ jobs:
           parameter-overrides: "EnvPrefix=${{ env.BRANCH_NAME }},BucketName=${{ env.BUCKET_NAME }},Username=${{ env.USERNAME }}"
           aws-region: ${{ env.AWS_REGION }}
       - name: Deploy static site to S3 bucket
-        run: aws s3 sync ./dist s3://${{ env.BRANCH_NAME }}.${{ env.USERNAME }}.com --delete
+        run: | 
+          aws s3 sync ./dist s3://${{ env.BRANCH_NAME }}.${{ env.USERNAME }}.com --delete
+          run: echo ${{ outputs.WEBSITE_LINK }}
       # - run: node .github/actions/comment.js
 
     env:
@@ -36,4 +40,3 @@ jobs:
       ISSUE_NUMBER: ${{ github.event.pull_request.number }}
       REPO: ${{ github.event.repository.name }}
       OWNER: ${{ github.repository_owner }}
-      WEBSITE_LINK: ${{ steps.cfn-deploy.outputs.StackOutputs }}
