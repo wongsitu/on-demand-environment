@@ -4,7 +4,7 @@ on:
     types:
       - completed
   pull_request:
-    types: [synchronize, edited]
+    types: [opened, reopened, synchronize, edited]
 
 name: Create PR Env
 jobs:
