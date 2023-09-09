@@ -25,7 +25,7 @@ jobs:
       - name: Deploy static site to S3 bucket
         run: | 
           aws s3 sync ./dist s3://${{ env.BRANCH_NAME }}.${{ env.USERNAME }}.com --delete
-          echo ${{ steps.cfn-deploy.outputs }}
+          echo ${{ steps.cfn-deploy.outputs.WebsiteURL }}
       # - run: node .github/actions/comment.js
 
     env:
