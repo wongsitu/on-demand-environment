@@ -19,7 +19,7 @@ Ever wondered how Vercel creates on demand staging environments on every branch?
 Here is a diagram of the process:
 
 <div align="center">
-   <img src="./assets/ondemandenv.drawio.png" alt="diagram">
+   <img src="./assets/ondemandenv.png" alt="diagram">
 </div>
 
 ### Steps
