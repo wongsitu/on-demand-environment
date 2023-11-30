@@ -9,11 +9,10 @@ Ever wondered how Vercel creates on demand staging environments on every branch?
 ### TLDR:
 
 1. A pull request is created or updated
-2. A Github Action is triggered
-3. The Github Action creates a S3 bucket with the name of the branch and bucket policy to allow public access to the bucket
-4. The Github Action uploads the build content file of the branch to the S3 bucket
-6. The Github Action creates a comment on the pull request with the url of the S3 bucket
-7. When the pull request is merged/closed the Github Action deletes the S3 bucket
+2. The Github Action is triggered and creates a S3 bucket with the name of the branch and bucket policy to allow public access to the bucket
+3. The Github Action uploads the build content file of the branch to the S3 bucket
+4. The Github Action creates a comment on the pull request with the url of the S3 bucket
+5. When the pull request is merged/closed the Github Action deletes the S3 bucket
 
 ### Not clear enough?
 
@@ -182,8 +181,34 @@ jobs:
       USERNAME: ${{ github.actor }}
 ```
 
-### Screenshots
+### Demo Screenshots
+
+Branch is created:
 
 <div align="center">
    <img src="./assets/create-branch.jpg" alt="branch">
+</div>
+
+Here are the changes:
+
+<div align="center">
+   <img src="./assets/code.jpg" alt="branch">
+</div>
+
+Pull request is created with the generated URL:
+
+<div align="center">
+   <img src="./assets/pull-request.jpg" alt="branch">
+</div>
+
+Small vite app is deployed with the changes:
+
+<div align="center">
+   <img src="./assets/demo.jpg" alt="branch">
+</div>
+
+Once merged the stack is deleted along with the S3 bucket:
+
+<div align="center">
+   <img src="./assets/destroy.jpg" alt="branch">
 </div>
