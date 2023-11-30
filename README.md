@@ -14,8 +14,6 @@ Ever wondered how Vercel creates on demand staging environments on every branch?
 4. The Github Action creates a comment on the pull request with the url of the S3 bucket
 5. When the pull request is merged/closed the Github Action deletes the S3 bucket
 
-### Not clear enough?
-
 Here is a diagram of the process:
 
 <div align="center">
